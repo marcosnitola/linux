@@ -4,7 +4,6 @@
 .audacity-data/*
 .bash_history
 .bash_logout
-.bashrc
 .bashrc_old
 .bluej.Boot$App/*
 .bluej/*
@@ -42,7 +41,6 @@
 .tlauncher/*
 .tooling/*
 .viminfo
-.vimrc
 .wget-hsts
 .xinputrc
 .zoom/*
