@@ -2,4 +2,4 @@
 # Copies all the files 
 cp ~/.vimrc .
 cp ~/.bashrc .
-cp ~/.config/qtile/* ./.config/qtile/
+cp ~/.config/qtile/config.py ./.config/qtile/
