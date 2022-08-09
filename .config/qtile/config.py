@@ -84,10 +84,16 @@ groups = [
 
 keys.extend(
   # Some code must be here
-  [Key([mod], 1, lazy.group["NET"].toscreen())],
-  [Key([mod], 1, lazy.group["TERM"].toscreen())],
-  [Key([mod], 1, lazy.group["DEV"].toscreen())],
-  [Key([mod], 1, lazy.group["MEDIA"].toscreen())]
+  [
+    Key([mod], '1', lazy.group["NET"].toscreen()),
+    Key([mod], '2', lazy.group["TERM"].toscreen()),
+    Key([mod], '3', lazy.group["DEV"].toscreen()),
+    Key([mod], '4', lazy.group["MEDIA"].toscreen()),
+    Key([mod, "shift"], '1', lazy.window.togroup("NET", switch_group=True)),
+    Key([mod, "shift"], '2', lazy.window.togroup("TERM", switch_group=True)),
+    Key([mod, "shift"], '3', lazy.window.togroup("DEV", switch_group=True)),
+    Key([mod, "shift"], '4', lazy.window.togroup("MEDIA", switch_group=True)),
+  ]
 )
 
 #for i in range(0,5):
