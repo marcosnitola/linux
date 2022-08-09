@@ -55,13 +55,13 @@ if [ -n "$force_color_prompt" ]; then
 	color_prompt=
     fi
 fi
-#get_git_branch(){
-#  if [ -z "$(echo \"$(__git_ps1)\")" ]; then
-#    echo ''
-#  else
-#    echo " $(__git_ps1 '%s')"
-#  fi
-#}
+get_git_branch(){
+  if [ -z "$(__git_ps1)" ]; then
+    echo ''
+  else
+    echo " $(__git_ps1 '%s')"
+  fi
+}
 #if [ -z "$(echo '$(__git_ps1)')" ]; then 
 #    git_branch='no branch'
 #else
@@ -71,7 +71,7 @@ fi
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\] \u  \h \[\033[32;44m\] \[\033[30;44m\]\w \[\033[34;107m\] \$ \[\033[97;49m\] '
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\]  \u\h \[\033[32;49m\]$(__git_ps1 " %s") \[\033[34m\]\w \[\033[30;107m\]\$\[\033[97;49m\]\[\033[0m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\]  \u\h \[\033[32;49m\] \[\033[34m\]\w \[\033[32;49m\]$(__git_ps1 "%s ")\[\033[30;107m\]\$\[\033[97;49m\]\[\033[0m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
