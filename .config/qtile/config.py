@@ -83,7 +83,6 @@ groups = [
 ]
 
 keys.extend(
-  # Some code must be here
   [
     Key([mod], '1', lazy.group["NET"].toscreen()),
     Key([mod], '2', lazy.group["TERM"].toscreen()),
@@ -161,7 +160,9 @@ screens = [
         top=bar.Bar(
             [
                 widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(
+                    highlight_method='block'
+                ),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
