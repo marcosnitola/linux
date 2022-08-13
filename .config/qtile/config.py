@@ -132,7 +132,7 @@ keys.extend(
 #    )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4, border_on_single=True),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -152,6 +152,8 @@ widget_defaults = dict(
     #font="sans",
     fontsize=13,
     padding=0,
+    #border=0,
+    margin=0
 )
 extension_defaults = widget_defaults.copy()
 
@@ -163,7 +165,7 @@ screens = [
                 widget.GroupBox(
                     highlight_method='block'
                 ),
-                widget.Prompt(),
+                widget.Prompt(prompt="RUN: "),
                 widget.WindowName(),
                 widget.Chord(
                     chords_colors={
@@ -171,8 +173,8 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("New config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+                #widget.TextBox("New config", name="default"),
+                #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 widget.Systray(),
