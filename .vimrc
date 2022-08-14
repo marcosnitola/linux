@@ -5,6 +5,7 @@ syntax on
 set showcmd
 set autoindent
 set ic
+set mouse=a
  
 "set statusline=
 "set statusline+=\ %F\ %M\ %Y\ %r
@@ -26,6 +27,7 @@ set statusline=%#Visual#\ %<%f\ %*%h%m%=%14.(%l,%c%V%)\ %P
 "set statusline+=%#Visual#\ %t\ %*%y%h%m
 "set statusline+=%=%F:%l:%c\ (%P)
 set statusline=%#WildMenu#\ %{StatuslineMode()}\ %*
+"set statusline+=%{GitBranch()}
 set statusline+=%#Visual#\ %{FileT()}%<\ %t\ %*%h%m
 set statusline+=%=%F%l%c\ (%P)
 function! StatuslineMode()
@@ -47,6 +49,13 @@ function! StatuslineMode()
   elseif l:mode==#"!"
     return "SHELL"
   endif
+endfunction
+
+" Git branch function
+function! GitBranch()
+  let gitBranch = system("__git_ps1 '%s'")
+  if strlen(gitBranch) > 0
+    return ''.gitBranch
 endfunction
 
 function! FileT()
