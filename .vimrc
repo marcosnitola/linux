@@ -1,20 +1,29 @@
+set nocompatible
+set title
 set number
 set rnu
-syntax on
-"set cursorline
-set showcmd
-set autoindent
-set ic
 set mouse=a
+set cursorline
+set showcmd
  
+" Search options
+set showmatch
+set smartcase
+set ic
+
+" Syntax
+syntax on
+set laststatus=2
+set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set expandtab
+set autoindent
+
 "set statusline=
 "set statusline+=\ %F\ %M\ %Y\ %r
 "set statusline+=%=
 "set statusline+=\ %l\ %c\ %p%%
-set laststatus=2
-"set shiftwidth=4
-set tabstop=2
-set expandtab
 
 " Statusline custom 1
 "set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
