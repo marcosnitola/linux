@@ -45,9 +45,9 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  padding:
-    x: 3
-    y: 3
+  #padding:
+    #x: 3
+    #y: 3
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -156,7 +156,8 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 13.0
+  size: 13
+  #size: 11.5
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -331,10 +332,46 @@ font:
   # regardless of their background color.
   #transparent_background_colors: false
 
+# ==== Color theme ====
+# Colors (Base16 Default Dark)
+colors:
+  # Default colors
+  primary:
+    background: '#181818'
+    foreground: '#d8d8d8'
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '#d8d8d8'
+    cursor: '#d8d8d8'
+
+  # Normal colors
+  normal:
+    black:   '#181818'
+    red:     '#ab4642'
+    green:   '#a1b56c'
+    yellow:  '#f7ca88'
+    blue:    '#7cafc2'
+    magenta: '#ba8baf'
+    cyan:    '#86c1b9'
+    white:   '#d8d8d8'
+
+  # Bright colors
+  bright:
+    black:   '#585858'
+    red:     '#ab4642'
+    green:   '#a1b56c'
+    yellow:  '#f7ca88'
+    blue:    '#7cafc2'
+    magenta: '#ba8baf'
+    cyan:    '#86c1b9'
+    white:   '#f8f8f8'
+# ==== Color theme ====
+
 # Bell
 #
 # The bell is rung every time the BEL control character is received.
-#bell:
+bell:
   # Visual Bell Animation
   #
   # Animation effect for flashing the screen when the visual bell is rung.
@@ -354,10 +391,10 @@ font:
 
   # Duration of the visual bell flash in milliseconds. A `duration` of `0` will
   # disable the visual bell animation.
-  #duration: 0
+  duration: 100
 
   # Visual bell animation color.
-  #color: '#ffffff'
+  color: '#ffffff'
 
   # Bell Command
   #
