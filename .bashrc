@@ -71,7 +71,7 @@ get_git_branch(){
 if [ "$color_prompt" = yes ]; then
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 #    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\] \u  \h \[\033[32;44m\] \[\033[30;44m\]\w \[\033[34;107m\] \$ \[\033[97;49m\] '
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\]  \u\h \[\033[32;49m\] \[\033[34m\]\w \[\033[32;49m\]$(__git_ps1 "%s ")\[\033[30;107m\]\$\[\033[97;49m\]\[\033[0m\] '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[30;42m\]  \u\h \[\033[32;49m\] \[\033[34m\]\w \[\033[32;49m\]$(__git_ps1 "%s ")\[\033[30;107m\]\[\033[97;49m\]\[\033[0m\]\n\[\033[30;42m\] \$ \[\033[32;49m\]\[\033[0m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -105,6 +105,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias py3='python3'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
