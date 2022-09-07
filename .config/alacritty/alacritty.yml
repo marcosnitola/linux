@@ -332,41 +332,43 @@ font:
   # regardless of their background color.
   #transparent_background_colors: false
 
+## Favorites
+## * Base 16 default,
+## * Atom One Dark,
+## * Cyber Punk Neon,
+## * Gotham,
+## * Gruvbox dark
 # ==== Color theme ====
-# Colors (Base16 Default Dark)
+# Colors (Gruvbox dark)
 colors:
   # Default colors
   primary:
-    background: '#181818'
-    foreground: '#d8d8d8'
+    # hard contrast: background = '0x1d2021'
+    background: '0x282828'
+    # soft contrast: background = '0x32302f'
+    foreground: '0xebdbb2'
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  #cursor:
-  #  text: '#d8d8d8'
-  #  cursor: '#d8d8d8'
-  cursor:
-    text: CellBackground
-    cursor: CellForeground   # Normal colors
+  # Normal colors
   normal:
-    black:   '#181818'
-    red:     '#ab4642'
-    green:   '#a1b56c'
-    yellow:  '#f7ca88'
-    blue:    '#7cafc2'
-    magenta: '#ba8baf'
-    cyan:    '#86c1b9'
-    white:   '#d8d8d8'
+    black:   '0x282828'
+    red:     '0xcc241d'
+    green:   '0x98971a'
+    yellow:  '0xd79921'
+    blue:    '0x458588'
+    magenta: '0xb16286'
+    cyan:    '0x689d6a'
+    white:   '0xa89984'
 
   # Bright colors
   bright:
-    black:   '#585858'
-    red:     '#ab4642'
-    green:   '#a1b56c'
-    yellow:  '#f7ca88'
-    blue:    '#7cafc2'
-    magenta: '#ba8baf'
-    cyan:    '#86c1b9'
-    white:   '#f8f8f8'
+    black:   '0x928374'
+    red:     '0xfb4934'
+    green:   '0xb8bb26'
+    yellow:  '0xfabd2f'
+    blue:    '0x83a598'
+    magenta: '0xd3869b'
+    cyan:    '0x8ec07c'
+    white:   '0xebdbb2'
 # ==== Color theme ====
 
 # Bell
