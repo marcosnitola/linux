@@ -1,3 +1,9 @@
+" Load plugins through vim-plug
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'morhetz/gruvbox'
+call plug#end()
+
+" Basic settings
 set nocompatible
 set title
 set number
@@ -18,8 +24,8 @@ set background=dark
 if (has("termguicolors"))
   set termguicolors
 endif
-colorscheme desert
-" other themes: elford, industry,  koehler, pablo, desert
+colorscheme gruvbox
+" other themes: desert, evening, elford, industry,  koehler, pablo, 
 "hi User1 ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 "hi User2 ctermbg=darkcyan ctermfg=lightgray guibg=lightblue guifg=black
 
