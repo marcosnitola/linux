@@ -24,6 +24,7 @@ set background=dark
 if (has("termguicolors"))
   set termguicolors
 endif
+" Plugin theme
 colorscheme gruvbox
 " other themes: desert, evening, elford, industry,  koehler, pablo, 
 "hi User1 ctermbg=yellow ctermfg=black guibg=yellow guifg=black
