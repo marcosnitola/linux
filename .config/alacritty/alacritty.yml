@@ -61,7 +61,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
-  decorations: none
+  decorations: full
 
   # Background opacity
   #
@@ -156,8 +156,8 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 13
-  #size: 11.5
+  #size: 13
+  size: 11.5
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -807,7 +807,7 @@ key_bindings:
   - { key: End,       mods: Shift,   mode: ~Alt,        action: ScrollToBottom   }
   - { key: Q,         mods: Shift|Control,              action: Quit             }
   - { key: F11,                                         action: ToggleFullscreen }
-  - { key: N,         mods: Control,                    action: SpawnNewInstance }
+  - { key: N,         mods: Shift|Control,              action: SpawnNewInstance }
 
   # Vi Mode
   #- { key: Space,  mods: Shift|Control, mode: ~Search,    action: ToggleViMode            }
