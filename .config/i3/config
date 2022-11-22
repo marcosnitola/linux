@@ -11,6 +11,25 @@
 
 set $mod Mod4
 
+# Colorscheme (Gruvbox dark)
+set $color0r #282828
+set $color1r #cc241d
+set $color2r #98971a
+set $color3r #d79921
+set $color4r #458588
+set $color5r #b16286
+set $color6r #689d6a
+set $color7r #a89984
+#bright
+set $color0l #928374
+set $color1l #fb4934
+set $color2l #b8bb26
+set $color3l #fabd2f
+set $color4l #83a598
+set $color5l #d3869b
+set $color6l #8ec07c
+set $color7l #ebdbb2
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 #font pango:monospace 8
@@ -95,10 +114,10 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # Defining workspaces
-set $ws1 "1:MAIN"
-set $ws2 "2:TERM"
-set $ws3 "3:NET"
-set $ws4 "4:MEDIA"
+set $ws1 "1:TERM"
+set $ws2 "2:NET"
+set $ws3 "3:MEDIA"
+set $ws4 "4:4"
 set $ws5 "5:5"
 set $ws6 "6:6"
 set $ws7 "7:7"
@@ -134,7 +153,12 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym XF86AudioRaiseVolume exec "amixer -q sset Master,0 1+ unmute"
 bindsym XF86AudioLowerVolume exec "amixer -q sset Master,0 1- unmute"
 #bindsym XF86AudioMute exec "amixer -q sset Master,0 toggle"
-bindsym XF86AudioMute exec "notify-send xd"
+#bindsym XF86AudioMute exec "amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'cc | while read VOLUME; do notify-send $VOLUME; done"
+bindsym XF86AudioMute exec "notify-send 'volumen' '$(amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]'cc)'"
+
+# Brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -174,6 +198,12 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        colors {
+          background $color0r
+          statusline $color7l
+          separator $color7l
+          focused_workspace $color3l $color3r $color7l
+        }
         status_command i3status --config ~/.config/i3/i3status.conf
         # Custom
         position top
@@ -183,3 +213,6 @@ bar {
 # Custom config
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 exec xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Natural Scrolling Enabled" 1
+
+# Window colors
+client.focused           $color6r $color6r $color7l $color4l $color4r
