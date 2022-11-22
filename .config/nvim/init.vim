@@ -10,7 +10,7 @@ set number
 set relativenumber
 set cursorline
 set mouse=a
-set nowrap
+set wrap
 set hidden
 
 
