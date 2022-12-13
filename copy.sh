@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copies all the files 
+# Copies all the files from ~ to this repo
 cp ~/.vimrc .
 cp ~/.bashrc .
 cp ~/.config/qtile/config.py ./.config/qtile/
