@@ -97,8 +97,12 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
-    Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(datetime.now())), desc=""),
-    Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(datetime.now())), desc=""),
+    Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
+        str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
+    )), desc=""),
+    Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
+        str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
+    )), desc=""),
     # Apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
@@ -227,14 +231,19 @@ screens = [
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.Volume(
+                #widget.Volume(
+                #    fmt='墳 {}',
+                #    step=5
+                #),
+                widget.PulseVolume(
                     fmt='墳 {}',
-                    step=5
+                    step=5,
+                    limit_max_volume=True
                 ),
                 #widget.Net(),
                 #widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
                 widget.Systray(),
-                widget.Clock(format=" %Y.%m.%d.%H:%M "),
+                widget.Clock(format=" %Y.%m.%d %H:%M "),
                 widget.QuickExit(
                     background=colors[1],
                     default_text='   ',
@@ -252,11 +261,17 @@ screens = [
 ]
 
 keys.extend([
-    Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
-    Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
-    Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
-    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5+"), desc="Increase brightness"),
-    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5+"), desc="Decrease brightness"),
+    #Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
+    #Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
+    #Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
+    Key([],"XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol(), desc="Increase volume"),
+    Key([],"XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol(), desc="Decrease volume"),
+    Key([],"XF86AudioMute", lazy.widget["pulsevolume"].mute(), desc="Mute volume"),
+    #Key([],"XF86AudioRaiseVolume", lazy.spawn("amixer sset Master playback 5%+"), desc="Increase volume"),
+    #Key([],"XF86AudioLowerVolume", lazy.spawn("amixer sset Master playback 5%-"), desc="Decrease volume"),
+    #Key([],"XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Mute volume"),
+    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5%+"), desc="Increase brightness"),
+    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5%-"), desc="Decrease brightness"),
 ])
 
 # Drag floating layouts.
