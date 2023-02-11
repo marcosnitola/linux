@@ -29,9 +29,33 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+import os
+import subprocess
+from libqtile import hook
+from datetime import datetime
+
 mod = "mod4"
-#terminal = guess_terminal()
-terminal = "alacritty"
+terminal = guess_terminal()
+#terminal = "alacritty"
+browser = "google-chrome"
+colors = [
+    '282828',
+    'CC241D',
+    '98971A',
+    'D79921',
+    '458588',
+    'b16286',
+    '689D6A',
+    'A89984',
+    '928374',
+    'FB4934',
+    'B8BB26',
+    'FABD2F',
+    '83A598',
+    'D3869B',
+    '8EC07C',
+    'EBDBB2'
+]
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -72,14 +96,21 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
+    Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(datetime.now())), desc=""),
+    Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(datetime.now())), desc=""),
+    # Apps
+    Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
+    Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
 ]
 
 #groups = [Group(i) for i in "123456789"]
 groups = [
-    Group("NET"),
+    Group("NET", layout="max", matches=[Match(wm_class="google-chrome")]),
     Group("TERM"),
     Group("DEV"),
-    Group("MEDIA")
+    Group("SYS"),
+    Group("MEDIA", matches=[Match(wm_class="telegram-desktop")])
 ]
 
 keys.extend(
@@ -87,11 +118,13 @@ keys.extend(
     Key([mod], '1', lazy.group["NET"].toscreen()),
     Key([mod], '2', lazy.group["TERM"].toscreen()),
     Key([mod], '3', lazy.group["DEV"].toscreen()),
-    Key([mod], '4', lazy.group["MEDIA"].toscreen()),
+    Key([mod], '4', lazy.group["SYS"].toscreen()),
+    Key([mod], '5', lazy.group["MEDIA"].toscreen()),
     Key([mod, "shift"], '1', lazy.window.togroup("NET", switch_group=True)),
     Key([mod, "shift"], '2', lazy.window.togroup("TERM", switch_group=True)),
     Key([mod, "shift"], '3', lazy.window.togroup("DEV", switch_group=True)),
-    Key([mod, "shift"], '4', lazy.window.togroup("MEDIA", switch_group=True)),
+    Key([mod, "shift"], '4', lazy.window.togroup("SYS", switch_group=True)),
+    Key([mod, "shift"], '5', lazy.window.togroup("MEDIA", switch_group=True)),
   ]
 )
 
@@ -131,9 +164,16 @@ keys.extend(
 #        ]
 #    )
 
+layout_theme = {
+    "margin": 7,
+    "border_width": 3,
+    "border_focus": colors[4],
+    "border_normal": colors[7]
+}
+
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    layout.Max(),
+    layout.Columns(border_on_single=True, **layout_theme),
+    layout.Max(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -150,8 +190,9 @@ layouts = [
 widget_defaults = dict(
     font="JetBrains Mono Nerd Font",
     #font="sans",
-    fontsize=13,
-    padding=0,
+    fontsize=12,
+    padding=3,
+    foreground="#EBDBB2"
 )
 extension_defaults = widget_defaults.copy()
 
@@ -159,11 +200,21 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.CurrentLayout(),
                 widget.GroupBox(
-                    highlight_method='block'
+                    highlight_method='block',
+                    active=colors[15],
+                    inactive=colors[7],
+                    urgent_alert_method='block',
+                    urgent_border=colors[1],
+                    urgent_text='EBDBB2',
+                    this_current_screen_border=colors[4],
+                    rounded=False,
+                    spacing=0
                 ),
-                widget.Prompt(),
+                widget.Prompt(
+                    background="#928374",
+                    ignore_dups_history=True
+                ),
                 widget.WindowName(),
                 widget.Chord(
                     chords_colors={
@@ -171,31 +222,54 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
+                widget.CurrentLayout(),
                 #widget.TextBox("New config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
+                widget.Volume(
+                    fmt='墳 {}',
+                    step=5
+                ),
+                #widget.Net(),
+                #widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
                 widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                widget.Clock(format=" %Y.%m.%d.%H:%M "),
+                widget.QuickExit(
+                    background=colors[1],
+                    default_text='   ',
+                    countdown_format=' {} '
+                ),
             ],
             24,
+            background=colors[0]
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
+        wallpaper="/home/marcos/Imágenes/wp4720954.jpg",
+        wallpaper_mode="fill"
     ),
 ]
+
+keys.extend([
+    Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
+    Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
+    Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
+    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5+"), desc="Increase brightness"),
+    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5+"), desc="Decrease brightness"),
+])
 
 # Drag floating layouts.
 mouse = [
     Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+    Drag([mod, "shift"], "Button1", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
@@ -208,7 +282,8 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
-    ]
+    ],
+    **layout_theme
 )
 auto_fullscreen = True
 focus_on_window_activation = "smart"
@@ -220,6 +295,12 @@ auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
+
+@hook.subscribe.startup_once
+def start_once():
+    home = os.path.expanduser('~')
+    subprocess.call([home + '/.config/qtile/autostart.sh'])
+
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
