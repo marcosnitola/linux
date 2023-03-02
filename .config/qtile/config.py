@@ -92,17 +92,21 @@ keys = [
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod, "Shift"], "Tab", lazy.prev_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
-    Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
-        str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
-    )), desc=""),
-    Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
-        str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
-    )), desc=""),
+    # Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
+    #     str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
+    # )), desc=""),
+    #Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qttest_$(date +%Y-%m-%d_%H-%M-%S).png'"), desc=""),
+    Key([], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -f"), desc=""),
+    #Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
+    #    str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
+    #)), desc=""),
+    Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc=""),
     # Apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
@@ -114,7 +118,7 @@ groups = [
     Group("TERM"),
     Group("DEV"),
     Group("SYS"),
-    Group("MEDIA", matches=[Match(wm_class="telegram-desktop")])
+    Group("MEDIA", matches=[Match(wm_class="telegram-desktop"), Match(wm_class="zoom")])
 ]
 
 keys.extend(
@@ -182,8 +186,9 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
-    # layout.MonadWide(),
+    layout.Spiral(**layout_theme),
+    layout.MonadTall(**layout_theme),
+    layout.MonadWide(**layout_theme),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
