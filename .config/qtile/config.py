@@ -98,15 +98,10 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
-    # Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
-    #     str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
-    # )), desc=""),
-    #Key([], "Print", lazy.spawn("xfce4-screenshooter -f -s 'Imágenes/Capturas de pantalla/qttest_$(date +%Y-%m-%d_%H-%M-%S).png'"), desc=""),
-    Key([], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -f"), desc=""),
-    #Key(["shift"], "Print", lazy.spawn("xfce4-screenshooter -r -s 'Imágenes/Capturas de pantalla/qt_{}.png'".format(
-    #    str(datetime.now())[0:13] + "_" + str(datetime.now())[11:19]
-    #)), desc=""),
-    Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc=""),
+    Key([], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -f"), desc="Save full screenshot"),
+    Key(["control"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -F"), desc="Copy to clipboard full screenshot"),
+    Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc="Save regional screenshot"),
+    Key(["control", "shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -R"), desc="Copy to clipboard regional screenshot"),
     # Apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
