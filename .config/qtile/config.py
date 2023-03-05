@@ -32,12 +32,13 @@ from libqtile.utils import guess_terminal
 import os
 import subprocess
 from libqtile import hook
-from datetime import datetime
 
 mod = "mod4"
 terminal = guess_terminal()
 #terminal = "alacritty"
 browser = "google-chrome"
+
+# Colors based on Gruvbox theme
 colors = [
     '282828',
     'CC241D',
@@ -80,15 +81,10 @@ keys = [
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
     # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key(
-        [mod, "shift"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
+    #     Split = all windows displayed
+    #     Unsplit = 1 window displayed, like Max layout, but still with
+    #     multiple stack panes
+    Key([mod, "shift"],"Return",lazy.layout.toggle_split(),desc="Toggle between split and unsplit sides of stack",),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
@@ -98,74 +94,29 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
+    # Take screenshots
     Key([], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -f"), desc="Save full screenshot"),
     Key(["control"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -F"), desc="Copy to clipboard full screenshot"),
     Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc="Save regional screenshot"),
     Key(["control", "shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -R"), desc="Copy to clipboard regional screenshot"),
-    # Apps
+    # Execute apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
 ]
 
-#groups = [Group(i) for i in "123456789"]
 groups = [
     Group("NET", layout="max", matches=[Match(wm_class="google-chrome")]),
     Group("TERM"),
     Group("DEV"),
     Group("SYS"),
-    Group("MEDIA", matches=[Match(wm_class="telegram-desktop"), Match(wm_class="zoom")])
+    Group("CHAT", matches=[Match(wm_class="telegram-desktop")]),
+    Group("MEDIA", matches=[Match(wm_class="zoom")]),
+    Group("GFX", layout="floating")
 ]
 
-keys.extend(
-  [
-    Key([mod], '1', lazy.group["NET"].toscreen()),
-    Key([mod], '2', lazy.group["TERM"].toscreen()),
-    Key([mod], '3', lazy.group["DEV"].toscreen()),
-    Key([mod], '4', lazy.group["SYS"].toscreen()),
-    Key([mod], '5', lazy.group["MEDIA"].toscreen()),
-    Key([mod, "shift"], '1', lazy.window.togroup("NET", switch_group=True)),
-    Key([mod, "shift"], '2', lazy.window.togroup("TERM", switch_group=True)),
-    Key([mod, "shift"], '3', lazy.window.togroup("DEV", switch_group=True)),
-    Key([mod, "shift"], '4', lazy.window.togroup("SYS", switch_group=True)),
-    Key([mod, "shift"], '5', lazy.window.togroup("MEDIA", switch_group=True)),
-  ]
-)
-
-#for i in range(0,5):
-#    keys.extend(
-#        [
-#            Key([mod], i+1, lazy.group[groups[i].name].toscreen(),
-#                desc="Switch to group {}".format(groups[i].name)
-#            ),
-#            Key([mod, "shift"], i+1, lazy.window.togroup(groups[i].name, switch_group=True),
-#                desc="Switch to & move focused window to group {}".format(groups[i].name)
-#            )
-#        ]
-#    )
-
-#for i in groups:
-#    keys.extend(
-#        [
-#            # mod1 + letter of group = switch to group
-#            Key(
-#                [mod],
-#                i.name,
-#                lazy.group[i.name].toscreen(),
-#                desc="Switch to group {}".format(i.name),
-#            ),
-#            # mod1 + shift + letter of group = switch to & move focused window to group
-#            Key(
-#                [mod, "shift"],
-#                i.name,
-#                lazy.window.togroup(i.name, switch_group=True),
-#                desc="Switch to & move focused window to group {}".format(i.name),
-#            ),
-#            # Or, use below if you prefer not to switch to that group.
-#            # # mod1 + shift + letter of group = move focused window to group
-#            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-#            #     desc="move focused window to group {}".format(i.name)),
-#        ]
-#    )
+for i, group in zip(["1","2","3","4","5","6","7","8","9","0"], groups):
+    keys.append(Key([mod], i, lazy.group[group.name].toscreen()))
+    keys.append(Key([mod, "shift"], i, lazy.window.togroup(group.name, switch_group=True)))
 
 layout_theme = {
     "margin": 7,
@@ -177,6 +128,7 @@ layout_theme = {
 layouts = [
     layout.Columns(border_on_single=True, **layout_theme),
     layout.Max(**layout_theme),
+    layout.Floating(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -213,13 +165,19 @@ screens = [
                     urgent_text='EBDBB2',
                     this_current_screen_border=colors[4],
                     rounded=False,
-                    spacing=0
+                    spacing=0,
+                    padding_y=4,
+                    margin_x=0
                 ),
                 widget.Prompt(
                     background="#928374",
                     ignore_dups_history=True
                 ),
-                widget.WindowName(),
+                widget.TextBox("|"),
+                widget.WindowName(
+                    #format='|{state}{name}|'
+                ),
+                widget.TextBox("|"),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -227,6 +185,7 @@ screens = [
                     name_transform=lambda name: name.upper(),
                 ),
                 widget.CurrentLayout(),
+                widget.TextBox("|"),
                 #widget.TextBox("New config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
@@ -241,8 +200,8 @@ screens = [
                     limit_max_volume=True
                 ),
                 #widget.Net(),
-                #widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
                 widget.Systray(),
+                widget.TextBox("|"),
                 widget.Clock(format=" %Y.%m.%d %H:%M "),
                 widget.QuickExit(
                     background=colors[1],
@@ -251,7 +210,7 @@ screens = [
                 ),
             ],
             24,
-            background=colors[0]
+            background=colors[0],
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -311,6 +270,7 @@ auto_minimize = True
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
 
+# Initial script shell once Qtile starts
 @hook.subscribe.startup_once
 def start_once():
     home = os.path.expanduser('~')
