@@ -26,7 +26,6 @@ if (has("termguicolors"))
 endif
 " Plugin theme
 colorscheme gruvbox
-let g:gruvbox_contrast_dark = "soft"
 " other themes: desert, evening, elford, industry,  koehler, pablo, 
 "hi User1 ctermbg=yellow ctermfg=black guibg=yellow guifg=black
 "hi User2 ctermbg=darkcyan ctermfg=lightgray guibg=lightblue guifg=black

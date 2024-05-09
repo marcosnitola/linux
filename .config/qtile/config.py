@@ -24,7 +24,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from libqtile import bar, layout, widget
+from libqtile import bar, layout, widget, extension
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -36,7 +36,7 @@ from libqtile import hook
 mod = "mod4"
 terminal = guess_terminal()
 #terminal = "alacritty"
-browser = "google-chrome"
+browser = "chromium" #"google-chrome"
 
 # Colors based on Gruvbox theme
 colors = [
@@ -89,26 +89,34 @@ keys = [
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "Shift"], "Tab", lazy.prev_layout(), desc="Toggle between layouts"),
-    Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+    Key([mod, "Shift"], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod, "Shift"], "r", lazy.run_extension(extension.DmenuRun(
+        dmenu_font="Jetbrains Mono Nerd Font"
+    )), desc="DMenu"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
+    Key([mod, "Shift"], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on focused window"),
     # Take screenshots
     Key([], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -f"), desc="Save full screenshot"),
     Key(["control"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -F"), desc="Copy to clipboard full screenshot"),
     Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc="Save regional screenshot"),
     Key(["control", "shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -R"), desc="Copy to clipboard regional screenshot"),
     # Execute apps
-    Key([mod], "b", lazy.spawn(browser), desc="Launch terminal"),
-    Key([mod], "e", lazy.spawn("thunar"), desc="Launch terminal"),
+    Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
+    Key([mod], "e", lazy.spawn("thunar"), desc="Launch file explorer"),
+    Key([mod], "t", lazy.spawn("Descargas/Telegram/Telegram"), desc="Launch file explorer"),
 ]
 
 groups = [
-    Group("NET", layout="max", matches=[Match(wm_class="google-chrome")]),
+    Group("NET", layout="max", matches=[
+        Match(wm_class="google-chrome"),
+        Match(wm_class="firefox"),
+        Match(wm_class="chromium")]),
     Group("TERM"),
     Group("DEV"),
-    Group("SYS"),
+    Group("SYS", matches=[Match(wm_class="thunar")]),
     Group("CHAT", matches=[Match(wm_class="telegram-desktop")]),
     Group("MEDIA", matches=[Match(wm_class="zoom")]),
     Group("GFX", layout="floating")
@@ -148,7 +156,7 @@ widget_defaults = dict(
     #font="sans",
     fontsize=12,
     padding=3,
-    foreground="#EBDBB2"
+    foreground=colors[15]
 )
 extension_defaults = widget_defaults.copy()
 
@@ -162,7 +170,7 @@ screens = [
                     inactive=colors[7],
                     urgent_alert_method='block',
                     urgent_border=colors[1],
-                    urgent_text='EBDBB2',
+                    urgent_text=colors[15],
                     this_current_screen_border=colors[4],
                     rounded=False,
                     spacing=0,
@@ -170,12 +178,13 @@ screens = [
                     margin_x=0
                 ),
                 widget.Prompt(
-                    background="#928374",
+                    background=colors[8],
                     ignore_dups_history=True
                 ),
                 widget.TextBox("|"),
                 widget.WindowName(
                     #format='|{state}{name}|'
+                    foreground=colors[3],
                 ),
                 widget.TextBox("|"),
                 widget.Chord(
@@ -184,7 +193,16 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
+                #widget.CurrentLayoutIcon(scale=0.5,padding=0),
                 widget.CurrentLayout(),
+                widget.TextBox("|"),
+                widget.Battery(
+                    charge_char='',
+                    discharge_char='',
+                    empty_char='',
+                    show_short_text=False,
+                    format='{char} {percent:2.0%}'
+                ),
                 widget.TextBox("|"),
                 #widget.TextBox("New config", name="default"),
                 #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
@@ -199,10 +217,11 @@ screens = [
                     step=5,
                     limit_max_volume=True
                 ),
-                #widget.Net(),
+                widget.TextBox("|"),
+                widget.Net(format="\uf502 {total}"),
                 widget.Systray(),
                 widget.TextBox("|"),
-                widget.Clock(format=" %Y.%m.%d %H:%M "),
+                widget.Clock(format="\uf64f %Y.%m.%d %H:%M "),
                 widget.QuickExit(
                     background=colors[1],
                     default_text='   ',
