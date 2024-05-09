@@ -113,7 +113,8 @@ groups = [
     Group("NET", layout="max", matches=[
         Match(wm_class="google-chrome"),
         Match(wm_class="firefox"),
-        Match(wm_class="chromium")]),
+        Match(wm_class="chromium"),
+        Match(wm_class="midori")]),
     Group("TERM"),
     Group("DEV"),
     Group("SYS", matches=[Match(wm_class="thunar")]),
@@ -135,7 +136,7 @@ layout_theme = {
 
 layouts = [
     layout.Columns(border_on_single=True, **layout_theme),
-    layout.Max(**layout_theme),
+    layout.Max(),
     layout.Floating(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -175,7 +176,10 @@ screens = [
                     rounded=False,
                     spacing=0,
                     padding_y=4,
-                    margin_x=0
+                    margin_x=0,
+                    use_mouse_wheel=False,
+                    disable_drag=True,
+                    hide_unused=True
                 ),
                 widget.Prompt(
                     background=colors[8],
@@ -233,7 +237,7 @@ screens = [
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
-        wallpaper="/home/marcos/Imágenes/wp4720954.jpg",
+        wallpaper="/home/marcos/Imágenes/Wallpapers/wp11977058-puss-in-boots-the-last-wish-death-wallpapers.jpg",
         wallpaper_mode="fill"
     ),
 ]
@@ -250,6 +254,7 @@ keys.extend([
     #Key([],"XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Mute volume"),
     Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5%+"), desc="Increase brightness"),
     Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5%-"), desc="Decrease brightness"),
+    Key([mod],"s", lazy.spawn("xscreensaver-command -lock"), desc="Lock screen"),
 ])
 
 # Drag floating layouts.
