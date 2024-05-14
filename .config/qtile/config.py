@@ -92,10 +92,7 @@ keys = [
     Key([mod, "Shift"], "w", lazy.window.kill(), desc="Kill focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod, "Shift"], "r", lazy.run_extension(extension.DmenuRun(
-        dmenu_font="Jetbrains Mono Nerd Font"
-    )), desc="DMenu"),
+    Key([mod], "r", lazy.spawn('rofi -show run'), desc="Spawn Rofi command"),
     Key([mod], "f", lazy.window.toggle_floating(), desc="Toggle floating on focused window"),
     Key([mod, "Shift"], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen on focused window"),
     # Take screenshots
@@ -106,7 +103,21 @@ keys = [
     # Execute apps
     Key([mod], "b", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch file explorer"),
-    Key([mod], "t", lazy.spawn("Descargas/Telegram/Telegram"), desc="Launch file explorer"),
+    Key([mod], "t", lazy.spawn("Portables/Telegram/Telegram"), desc="Launch file explorer"),
+    # Control volume
+    #Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
+    #Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
+    #Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
+    Key([],"XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol(), desc="Increase volume"),
+    Key([],"XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol(), desc="Decrease volume"),
+    Key([],"XF86AudioMute", lazy.widget["pulsevolume"].mute(), desc="Mute volume"),
+    #Key([],"XF86AudioRaiseVolume", lazy.spawn("amixer sset Master playback 5%+"), desc="Increase volume"),
+    #Key([],"XF86AudioLowerVolume", lazy.spawn("amixer sset Master playback 5%-"), desc="Decrease volume"),
+    #Key([],"XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Mute volume"),
+    # Control brightness
+    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5%+"), desc="Increase brightness"),
+    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5%-"), desc="Decrease brightness"),
+    Key([mod],"s", lazy.spawn("xscreensaver-command -lock"), desc="Lock screen"),
 ]
 
 groups = [
@@ -149,8 +160,22 @@ layouts = [
     # layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+    layout.Zoomy(),
 ]
+
+floating_layout = layout.Floating(
+    float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        *layout.Floating.default_float_rules,
+        Match(wm_class="confirmreset"),  # gitk
+        Match(wm_class="makebranch"),  # gitk
+        Match(wm_class="maketag"),  # gitk
+        Match(wm_class="ssh-askpass"),  # ssh-askpass
+        Match(title="branchdialog"),  # gitk
+        Match(title="pinentry"),  # GPG key password entry
+    ],
+    **layout_theme
+)
 
 widget_defaults = dict(
     font="JetBrains Mono Nerd Font",
@@ -201,9 +226,9 @@ screens = [
                 widget.CurrentLayout(),
                 widget.TextBox("|"),
                 widget.Battery(
-                    charge_char='',
-                    discharge_char='',
-                    empty_char='',
+                    charge_char='󰂄',
+                    discharge_char='󰁹',
+                    empty_char='󱃌',
                     show_short_text=False,
                     format='{char} {percent:2.0%}'
                 ),
@@ -217,19 +242,19 @@ screens = [
                 #    step=5
                 #),
                 widget.PulseVolume(
-                    fmt='墳 {}',
+                    fmt='󰕾 {}',
                     step=5,
                     limit_max_volume=True
                 ),
                 widget.TextBox("|"),
-                widget.Net(format="\uf502 {total}"),
+                widget.Net(format="󰖩 {total}"),
                 widget.Systray(),
                 widget.TextBox("|"),
-                widget.Clock(format="\uf64f %Y.%m.%d %H:%M "),
+                widget.Clock(format="󰸗 %Y.%m.%d %H:%M "),
                 widget.QuickExit(
                     background=colors[1],
-                    default_text='   ',
-                    countdown_format=' {} '
+                    default_text=' 󰐥  ',
+                    countdown_format='󰐥 {} '
                 ),
             ],
             24,
@@ -242,20 +267,6 @@ screens = [
     ),
 ]
 
-keys.extend([
-    #Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
-    #Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
-    #Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
-    Key([],"XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol(), desc="Increase volume"),
-    Key([],"XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol(), desc="Decrease volume"),
-    Key([],"XF86AudioMute", lazy.widget["pulsevolume"].mute(), desc="Mute volume"),
-    #Key([],"XF86AudioRaiseVolume", lazy.spawn("amixer sset Master playback 5%+"), desc="Increase volume"),
-    #Key([],"XF86AudioLowerVolume", lazy.spawn("amixer sset Master playback 5%-"), desc="Decrease volume"),
-    #Key([],"XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Mute volume"),
-    Key([],"XF86MonBrightnessUp", lazy.spawn("brightnessctl s 5%+"), desc="Increase brightness"),
-    Key([],"XF86MonBrightnessDown", lazy.spawn("brightnessctl s 5%-"), desc="Decrease brightness"),
-    Key([mod],"s", lazy.spawn("xscreensaver-command -lock"), desc="Lock screen"),
-])
 
 # Drag floating layouts.
 mouse = [
@@ -268,21 +279,8 @@ mouse = [
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
 follow_mouse_focus = False
-bring_front_click = False
+bring_front_click = True
 cursor_warp = False
-floating_layout = layout.Floating(
-    float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
-    ],
-    **layout_theme
-)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
