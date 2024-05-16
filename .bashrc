@@ -162,4 +162,6 @@ export EDITOR='nvim'
 
 source ~/.bash_completion/alacritty
 
-alias syncthing="/home/marcos/Descargas/syncthing-linux-amd64-v1.27.3/syncthing"
+alias syncthing="/home/marcos/Portables/syncthing-linux-amd64-v1.27.3/syncthing"
+alias telegram="/home/marcos/Portables/Telegram/Telegram"
+#export PATH="$HOME/Portables:$PATH"
