@@ -1,6 +1,7 @@
 " Load plugins through vim-plug
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'            " Syntax theme
+Plug 'itchyny/vim-gitbranch'      " Git branch
 call plug#end()
 
 " Basic settings
@@ -55,7 +56,7 @@ set statusline=%#Visual#\ %<%f\ %*%h%m%=%14.(%l,%c%V%)\ %P
 "set statusline+=%#Visual#\ %t\ %*%y%h%m
 "set statusline+=%=%F:%l:%c\ (%P)
 set statusline=%#LineNr#\ %{StatuslineMode()}\ %*
-"set statusline+=%{GitBranch()}
+set statusline+=%{GitBranch()}
 set statusline+=%#NonText#\ %{FileT()}\ %t\ %*%h%m
 set statusline+=%=%<%F\ %#NonText#\ %l%c\ (%P)\ %*
 
@@ -83,9 +84,12 @@ endfunction
 
 " Git branch function
 function! GitBranch()
-  let gitBranch = system("__git_ps1 '%s'")
+  let gitBranch = gitbranch#name()
   if strlen(gitBranch) > 0
-    return ''.gitBranch
+    return ' '.gitBranch.' '
+  else
+    return ''
+  endif
 endfunction
 
 " Returns the icon for the filetype
