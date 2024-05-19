@@ -69,13 +69,13 @@ get_git_branch(){
 #fi
 
 if [ "$color_prompt" = yes ]; then
-#    PS1='${debian_chroot:+($debian_chroot)}\[e[01;32m\]\u@\h\[e[00m\]:\[e[01;34m\]\w\[e[00m\]\$ '
-#    PS1='${debian_chroot:+($debian_chroot)}\[e[01;32m\]\u\h\[e[00m\]:\[e[01;34m\]\w\[e[00m\]\$ '
-#    PS1='${debian_chroot:+($debian_chroot)}\[e[30;42m\] \u  \h \[e[32;44m\] \[e[30;44m\]\w \[e[34;107m\] \$ \[e[97;49m\] '
-    #PS1='╭\[\e[32m\]\[e[30;42m\] \u\h \[e[32;49m\] \[e[34m\]\w \[e[32;49m\]$(__git_ps1 "%s ")\[e[30;107m\]\[e[97;49m\]\[e[0m\]\n╰\$ '
-    PS1='╭──(\[e[32m\] \u\h\[e[0m\])─[\[e[34m\]\w\[e[32;49m\]$(__git_ps1 "%s")\[\e[39m\]]\[e[0m\]$(if [ $? = 0 ]; then echo ""; else echo "─\[\e[31m\]($?)\[\e[0m\]"; fi)\n╰─\$\[\e[0m\] '
-    #PS1='${debian_chroot:+($debian_chroot)}\[e[30;42m\]  \u\h \[e[32;49m\] \[e[34m\]\w \[e[32;49m\]$(__git_ps1 "%s ")\[e[30;107m\]\[e[97;49m\]\[e[0m\]\n\[e[30;42m\] \$ \[e[32;49m\]\[e[0m\] '
-#    PS1='${debian_chroot:+($debian_chroot)}\[e[30;42m\]  \[e[32;49m\] \[e[34m\]\w \[e[32;49m\]$(__git_ps1 "%s ")\[e[30;107m\]\[e[97;49m\]\[e[0m\]\n\[e[30;42m\]  \u\h \$ \[e[32;49m\]\[e[0m\] '
+#    PS1='${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u@\h\[\e[00m\]:\[\e[01;34m\]\w\[\e[00m\]\$ '
+#    PS1='${debian_chroot:+($debian_chroot)}\[\e[01;32m\]\u\h\[\e[00m\]:\[\e[01;34m\]\w\[\e[00m\]\$ '
+#    PS1='${debian_chroot:+($debian_chroot)}\[\e[30;42m\] \u  \h \[\e[32;44m\] \[\e[30;44m\]\w \[\e[34;107m\] \$ \[\e[97;49m\] '
+    #PS1='╭\[\e[32m\]\[\e[30;42m\] \u\h \[\e[32;49m\] \[\e[34m\]\w \[\e[32;49m\]$(__git_ps1 "%s ")\[\e[30;107m\]\[\e[97;49m\]\[\e[0m\]\n╰\$ '
+    PS1='╭──(\[\e[32m\] \u\h\[\e[0m\])─[\[\e[34m\]\w\[\e[32;49m\]$(__git_ps1 "%s")\[\e[39m\]]\[\e[0m\]$(if [ $? = 0 ]; then echo ""; else echo "─\[\e[31m\]($?)\[\e[0m\]"; fi)\n╰─\$\[\e[0m\] '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\e[30;42m\]  \u\h \[\e[32;49m\] \[\e[34m\]\w \[\e[32;49m\]$(__git_ps1 "%s ")\[\e[30;107m\]\[\e[97;49m\]\[\e[0m\]\n\[\e[30;42m\] \$ \[\e[32;49m\]\[\e[0m\] '
+#    PS1='${debian_chroot:+($debian_chroot)}\[\e[30;42m\]  \[\e[32;49m\] \[\e[34m\]\w \[\e[32;49m\]$(__git_ps1 "%s ")\[\e[30;107m\]\[\e[97;49m\]\[\e[0m\]\n\[\e[30;42m\]  \u\h \$ \[\e[32;49m\]\[\e[0m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
