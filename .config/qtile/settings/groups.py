@@ -12,7 +12,7 @@ groups = [
     Group("DEV"),
     Group("SYS", matches=[Match(wm_class="thunar")]),
     Group("CHAT", matches=[Match(wm_class="telegram-desktop")]),
-    Group("MEDIA", matches=[Match(wm_class="zoom")]),
+    Group("MEDIA", matches=[Match(wm_class="zoom"),Match(wm_class="vlc")]),
     Group("GFX", layout="floating")
 ]
 
