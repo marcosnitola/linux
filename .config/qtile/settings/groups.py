@@ -13,7 +13,10 @@ groups = [
     Group("SYS", matches=[Match(wm_class="thunar")]),
     Group("CHAT", matches=[Match(wm_class="telegram-desktop")]),
     Group("MEDIA", matches=[Match(wm_class="zoom"),Match(wm_class="vlc")]),
-    Group("GFX", layout="floating")
+    Group("GFX", layout="floating"),
+    Group("8"),
+    Group("9"),
+    Group("0")
 ]
 
 for i, group in zip(["1","2","3","4","5","6","7","8","9","0"], groups):

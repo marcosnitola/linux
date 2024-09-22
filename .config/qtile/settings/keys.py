@@ -30,7 +30,7 @@ keys = [
     #     Unsplit = 1 window displayed, like Max layout, but still with
     #     multiple stack panes
     Key([mod, "shift"],"Return",lazy.layout.toggle_split(),desc="Toggle between split and unsplit sides of stack",),
-    Key([mod], "Return", lazy.spawn("alacritty"), desc="Launch terminal"),
+    Key([mod], "Return", lazy.spawn("kitty"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod, "Shift"], "Tab", lazy.prev_layout(), desc="Toggle between layouts"),
@@ -46,16 +46,13 @@ keys = [
     Key(["shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -r"), desc="Save regional screenshot"),
     Key(["control", "shift"], "Print", lazy.spawn("bash /home/marcos/.config/qtile/screenshot.sh -R"), desc="Copy to clipboard regional screenshot"),
     # Execute apps
-    Key([mod], "b", lazy.spawn("chromium"), desc="Launch browser"),
+    Key([mod], "b", lazy.spawn("firefox"), desc="Launch browser"),
     Key([mod], "e", lazy.spawn("thunar"), desc="Launch file explorer"),
     Key([mod], "t", lazy.spawn("Portables/Telegram/Telegram"), desc="Launch file explorer"),
     # Control volume
-    #Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
-    #Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
-    #Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
-    Key([],"XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol(), desc="Increase volume"),
-    Key([],"XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol(), desc="Decrease volume"),
-    Key([],"XF86AudioMute", lazy.widget["pulsevolume"].mute(), desc="Mute volume"),
+    Key([],"XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Increase volume"),
+    Key([],"XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Decrease volume"),
+    Key([],"XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute volume"),
     #Key([],"XF86AudioRaiseVolume", lazy.spawn("amixer sset Master playback 5%+"), desc="Increase volume"),
     #Key([],"XF86AudioLowerVolume", lazy.spawn("amixer sset Master playback 5%-"), desc="Decrease volume"),
     #Key([],"XF86AudioMute", lazy.spawn("amixer sset Master toggle"), desc="Mute volume"),

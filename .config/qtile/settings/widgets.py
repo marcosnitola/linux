@@ -3,7 +3,6 @@ from .theme import colors
 
 widget_defaults = dict(
     font="JetBrains Mono Nerd Font",
-    #font="sans",
     fontsize=12,
     padding=3,
     foreground=colors[15]
@@ -27,6 +26,8 @@ primary_widgets = [
         use_mouse_wheel=False,
         disable_drag=True,
     ),
+    widget.TextBox("|"),
+    widget.CurrentLayout(),
     widget.Prompt(
         background=colors[8],
         ignore_dups_history=True
@@ -36,6 +37,7 @@ primary_widgets = [
         #format='|{state}{name}|'
         foreground=colors[3],
     ),
+    widget.Systray(),
     widget.TextBox("|"),
     widget.Chord(
         chords_colors={
@@ -44,32 +46,33 @@ primary_widgets = [
         name_transform=lambda name: name.upper(),
     ),
     #widget.CurrentLayoutIcon(scale=0.5,padding=0),
-    widget.CurrentLayout(),
-    widget.TextBox("|"),
-    widget.Battery(
-        charge_char='󰂄',
-        discharge_char='󰁹',
-        empty_char='󱃌',
-        show_short_text=False,
-        format='{char} {percent:2.0%}'
-    ),
-    widget.TextBox("|"),
-    #widget.TextBox("New config", name="default"),
-    #widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
+
+    #widget.Battery(
+    #    charge_char='󰂄',
+    #    discharge_char='󰁹',
+    #    empty_char='󱃌',
+    #    show_short_text=False,
+    #    format='{char} {percent:2.0%}'
+    #),
+    #widget.TextBox("|"),
+
     # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
     # widget.StatusNotifier(),
-    #widget.Volume(
-    #    fmt='墳 {}',
-    #    step=5
-    #),
-    widget.PulseVolume(
-        fmt='󰕾 {}',
-        step=5,
-        limit_max_volume=True
+    widget.Volume(
+        fmt='墳 {}',
+        step=5
     ),
+
+    # widget.PulseVolume(
+    #     fmt='󰕾 {}',
+    #     step=5,
+    #     limit_max_volume=True
+    # ),
+    
     widget.TextBox("|"),
     widget.Net(format="󰖩 {total}"),
-    widget.Systray(),
+    # widget.TextBox("|"),
+    # widget.Wlan(format="󰖩 {essid}"),
     widget.TextBox("|"),
     widget.Clock(format="󰸗 %Y.%m.%d %H:%M "),
     widget.QuickExit(
