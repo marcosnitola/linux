@@ -1,8 +1,5 @@
 " Load plugins through vim-plug
-call plug#begin('~/.local/share/nvim/plugged')
-Plug 'morhetz/gruvbox'            " Syntax theme
-Plug 'itchyny/vim-gitbranch'      " Git branch
-call plug#end()
+so ~/.config/nvim/plugins.vim
 
 " Basic settings
 set nocompatible
@@ -13,6 +10,7 @@ set cursorline
 set mouse=a
 set wrap
 set hidden
+set encoding=UTF-8
 
 
 set showcmd
@@ -120,9 +118,4 @@ endfunction
 
 
 " Keymaps
-" Setting the mapleader
-let g:mapleader = 'ñ' " Mapleader is ñ
-" Keymap for stop highlight
-"map <esc> :noh <CR>
-nnoremap <leader>/ :noh <CR>
-"
+so ~/.config/nvim/keys.vim
