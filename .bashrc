@@ -152,8 +152,9 @@ export LESS_TERMCAP_us=$'\e[1;4;31m'
 echo
 #neofetch --off
 #neofetch --ascii_distro xubuntu
-neofetch --source Descargas/art.txt
+#neofetch --source Descargas/art.txt
 # cowsay -f duck "Welcome to \n xd"
+fastfetch
 PS2=' '
 
 # nvim as default editor
@@ -164,4 +165,12 @@ source ~/.bash_completion/alacritty
 
 alias syncthing="/home/marcos/Portables/syncthing-linux-amd64-v1.27.3/syncthing"
 alias telegram="/home/marcos/Portables/Telegram/Telegram"
+alias life.txt="cd ~/Documentos/Life/ && nvim"
 #export PATH="$HOME/Portables:$PATH"
+
+export PATH="$PATH:/opt/flutter/bin" #Flutter
+
+#Android Studio
+export PATH="$PATH:/opt/android-studio/bin" 
+export ANDROID_HOME="~/Android/Sdk"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools:$ANDROID_HOME/cmdline-tools/latest/bin"
