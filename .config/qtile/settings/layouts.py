@@ -11,7 +11,11 @@ layout_theme = {
 
 layouts = [
     layout.Columns(border_on_single=True, **layout_theme),
-    layout.Max(),
+    layout.Max(
+        border_focus=colors[3],
+        border_normal=colors[3],
+        border_width=layout_theme["border_width"],
+        margin=layout_theme["margin"]),
     layout.Floating(**layout_theme),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
