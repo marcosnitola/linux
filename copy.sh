@@ -9,6 +9,7 @@ elif [ "$1" = "" ]; then
   cp -vr ~/.config/i3/* ./.config/i3/
   cp -v ~/.config/alacritty/alacritty.yml ./.config/alacritty/alacritty.yml
   cp -vr ~/.config/nvim/* ./.config/nvim/
+  cp -vr ~/.config/kitty/* ./.config/kitty/
 else
   echo "Can't recognize $1"
 fi
