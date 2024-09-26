@@ -43,6 +43,10 @@ set shiftround
 set expandtab
 set autoindent
 
+set list
+set listchars=multispace:\ ┊
+  " Softtab -> multispace | tab -> tab
+
 " Statusline custom 1
 "set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 "set statusline=\ %<%f\ %h%m%=%14.(%l,%c%V%)\ %P
